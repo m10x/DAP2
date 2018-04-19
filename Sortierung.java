@@ -14,13 +14,27 @@ public class Sortierung
 
 			long tStart, tEnd, msecs;
 
+			boolean merge = true;
+
 			for (int i = 0; i < feld.length; i++)
 			{
-				if (args.length == 2 && args[1].equals("auf"))
-					feld[i] = 1 + i;
-				else if (args.length == 2 && args[1].equals("ab"))
-					feld[i] = feld.length - i;
-				else if (args.length == 1 || ( args.length == 2 && args[1].equals("rand") ) )
+				if (args.length == 3)
+				{
+					if (args[1].equals("insert"))
+						merge = false;
+					else if (!args[1].equals("merge"))
+						throw new Exception("Falsche Argumente übergeben!");
+					if (args[2].equals("auf"))
+						feld[i] = 1 + i;
+					else if (args[2].equals("ab"))
+						feld[i] = feld.length - i;
+					else if (args[2].equals("rand"))
+						feld[i] = numberGenerator.nextInt();
+					else
+						throw new Exception("Falsche Argumente übergeben!");
+
+				}
+				else if (args.length == 1)
 					feld[i] = numberGenerator.nextInt();
 				else
 					throw new Exception("Falsche Argumente übergeben!");
@@ -30,12 +44,22 @@ public class Sortierung
 				System.out.println(Arrays.toString(feld));
 			}
 
-			tStart = System.currentTimeMillis();
-			insertionSort(feld);
-			tEnd = System.currentTimeMillis();
-			msecs = tEnd - tStart;
-
-			System.out.println("InsertionSort hat "+msecs+" Millisekunden benötigt.");			
+			if (merge)
+			{
+				tStart = System.currentTimeMillis();
+				System.out.println("mergeeee");
+				tEnd = System.currentTimeMillis();
+				msecs = tEnd - tStart;
+				System.out.println("MergeSort hat "+msecs+" Millisekunden benötigt.");
+			}
+			else
+			{
+				tStart = System.currentTimeMillis();
+				insertionSort(feld);
+				tEnd = System.currentTimeMillis();
+				msecs = tEnd - tStart;
+				System.out.println("InsertionSort hat "+msecs+" Millisekunden benötigt.");
+			}
 
 			if (isSorted(feld))
 				System.out.println("Feld sortiert!");
@@ -49,7 +73,7 @@ public class Sortierung
 		catch (Exception e)
 		{
 			System.out.println(e);
-			System.out.println("Bitte benutze das Programm folgendermaßen:\n java Sortierung {länge} {auf/ab/rand}\n wobei {länge} eine Zahl größer 0 seien muss.");
+			System.out.println("Bitte benutze das Programm folgendermaßen:\njava Sortierung {länge} {{insert/merge} auf/ab/rand}\n wobei {länge} eine Zahl größer 0 seien muss.");
 			System.exit(0);
 		}
 
