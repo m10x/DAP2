@@ -36,6 +36,14 @@ public class Sortierung
 						throw new Exception("Falsche Argumente übergeben!");
 
 				}
+				else if (args.length == 2) //Wurden 2 Argumente übergeben?
+				{
+					if (args[1].equals("insert")) // Soll nach Insertion sortiert werden?
+						merge = false;
+					else if (!args[1].equals("merge")) // Wenn das 2.Argument auch nicht merge ist, wurde ein ungültiges Argument übergeben
+						throw new Exception("Falsche Argumente übergeben!"); // Werfe Fehlermeldung
+					feld[i] = numberGenerator.nextInt(); // Random sortierung
+				}
 				else if (args.length == 1) // Wurde nur 1 Argument übergeben? Dann bleibt merge = true und das Feld wird mit zufällig generierten Zahlen gefüllt!
 					feld[i] = numberGenerator.nextInt();
 				else // Wurde nicht 1 oder 3 Argumente übergeben? Fehler! Löse Exception aus!
