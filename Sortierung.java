@@ -143,6 +143,7 @@ public class Sortierung
 			k++;
 			i++;
 		}
+		assert isSorted(array); //Überprüfe ist Array sortiert?
 	}
 
 	public static void insertionSort(int[] array) //Methode zum sortieren eines Arrays nach InsertionSort Algorithmus!
