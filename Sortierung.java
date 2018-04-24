@@ -7,6 +7,8 @@ public class Sortierung
 	{
 		try
 		{
+			if (args.length == 0) // Keine Argumente übergeben?
+				throw new Exception("Falsche Argumente übergeben!");
 			int laenge = Integer.parseInt(args[0]); //Das 1. Argument legt die Array länge fest
 			assert laenge > 0 : laenge + " ist nicht groesser 0"; //Teste ob 1. Argument größer 0 ist
 			int[] feld = new int[laenge]; //Erzeuge Array mit übergebenen länge
@@ -62,9 +64,9 @@ public class Sortierung
 			}
 
 			if (isSorted(feld)) //Ist das Feld sortiert? Dann gebe dies durch eine Nachricht aus!
-				System.out.println("Feld sortiert!");
+				System.out.println("Feld sortiert!\n");
 			else //Das Feld ist also nicht sortiert? Dann gebe dies durch eine Nachricht aus!
-				System.out.println("Feld NICHT sortiert!");
+				System.out.println("Feld NICHT sortiert!      ßn");
 
 			if (feld.length <= 100) // Ist die Feldlänge kleiner gleich 100? Dann gebe das sortierte Array aus!
 			{
@@ -74,7 +76,7 @@ public class Sortierung
 		catch (Exception e) //Es ist eine Exception eingetroffen? Dann gebe den genauen Fehler aus und informiere den Benutzer über die korrekte Nutzung der Argumente!
 		{
 			System.out.println(e);
-			System.out.println("Bitte benutze das Programm folgendermaßen:\njava Sortierung {länge} {{insert/merge} auf/ab/rand}\nwobei {länge} eine Zahl größer 0 seien muss.");
+			System.out.println("Bitte benutze das Programm folgendermaßen:\njava Sortierung {länge} {{insert/merge} auf/ab/rand}\nwobei {länge} eine Zahl größer 0 seien muss.\n");
 			System.exit(0);
 		}
 
@@ -82,19 +84,56 @@ public class Sortierung
 
 	public static void mergeSort(int[] array) 
 	{
-		int[] tmpArray = new int[array.length];
+		int[] tmpArray = new int[array.length]; //Neues Feld das genauso groß ist wie das übergebene
 		mergeSort(array, tmpArray, 0, array.length-1);
-		assert isSorted(array);
+		assert isSorted(array); //Überprüfe ist Array sortiert?
 	}
 
 	public static void mergeSort(int[] array, int[] tmpArray, int left, int right) 
 	{
-		System.out.println("MergeSort wurde ausgeführt!!");
-		if (left < right)
+		if (left < right) //Ist mehr als 1 Element vorhanden?
 		{
-			int middle = (left + right) / 2;
-			mergeSort(array, tmpArray, left, middle);
-			mergeSort(array, tmpArray, middle + 1, right);
+			int middle = (left + right) / 2; //Berechne mittleres Element
+			mergeSort(array, tmpArray, left, middle); //Rufe mergeSort mit linker Hälfte auf
+			mergeSort(array, tmpArray, middle + 1, right); //Rufe mergeSort mit rechter Hälfte auf
+			merge(array, tmpArray, left, middle, right); //Füge teile zusammen
+		}
+	}
+
+	public static void merge(int[] array, int[] tmpArray, int left, int middle, int right)
+	{
+		int i, j, k;
+
+    	i=0; j=left;
+    	while (j<=middle) //vordere Hälfte von array in tmpArray kopieren
+		{
+        	tmpArray[i]=array[j];
+			i++;
+			j++;
+		}
+
+   		i=0; k=left;
+    	while (k<j && j<=right) //jeweils das nächstgrößte Element zurückkopieren
+		{
+        	if (tmpArray[i]<=array[j])
+			{
+           			array[k]=tmpArray[i];
+					k++;
+					i++;
+			}
+        	else
+			{
+           			array[k]=array[j];
+					k++;
+					j++;
+			}
+		}
+
+    	while (k<j) //Rest von tmpArray falls vorhanden zurückkopieren
+		{
+        	array[k]=tmpArray[i];
+			k++;
+			i++;
 		}
 	}
 
