@@ -1,5 +1,5 @@
 import java.util.Arrays; //Für Arrays.fill
-import java.lang.Float;
+import java.lang.Float; //Für float umrechnung
 
 public class bubbleSort {
 	
@@ -12,6 +12,7 @@ public class bubbleSort {
 			
 			long tStart, tEnd, msecs; //Zur Zeitmessung benötigt
 			float ziel = Float.parseFloat(args[0]); //Das erste Argument legt die gewünschte Dauer fest
+			assert ziel > 0.0F : "Argument darf nicht kleiner gleich 0 sein";
 			float dauer = 0; //wielange brauch der Algorithmus?
 			int groesse = 500; //array groesse
 
@@ -35,15 +36,16 @@ public class bubbleSort {
 				System.out.println("Dauer "+dauer+"   Ziel "+ziel);
 			}
 
-			System.out.println("\n\nStarte Binäre Suche\n\n");
+			System.out.println("\n\nStarte Binäre Suche\n");
 			
 			int oben = groesse;
 			int unten = groesse / 2;
 			int mitte = oben - (unten / 2);
-			System.out.println("Der Mittelwert von "+unten+" und "+oben+" ist "+mitte);
 
 			while((ziel - dauer) > 0.1f || (dauer - ziel) > 0.1f)
 			{
+				System.out.println("\nDer Mittelwert von "+unten+" und "+oben+" ist "+mitte);
+
 				int[] feld = new int[mitte]; //Erstelle Array
 				fillArray(feld); //Fülle Array
 
