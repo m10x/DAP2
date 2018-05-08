@@ -10,6 +10,7 @@ public class ConvexHull {
 		{
 			Point[] points = makePoints();
 			
+			simpleConvex(points);
 			//List<Point> huelle = simpleConvex(points);
 			//System.out.println("Huelle: " + huelle);
 
@@ -21,25 +22,39 @@ public class ConvexHull {
 		}
 	}
 
-	public List<Point> simpleConvex(Point[] P)
+	public static List<Point> simpleConvex(Point[] P)
 	{
 		List<Point> huelle = new LinkedList<Point>();
+		int j = 0;
+		int k = 0;
+		boolean kandidat = true;
+		
 		for (int i = 0; i < P.length; i++)
 		{
-			for (int j = 0; j < P.length; j++)
+			kandidat = true;
+			j = 0;
+			while(j < P.length && kandidat)
 			{
+				k = 0;
 				if (i != j)
 				{
-					for (int k = 0; k < P.length; k++)
+					while(k < P.length && kandidat)
 					{
 						if (k != i && k != j)
 						{
-							//teste ob k links von gerade i j
-							huelle.add(P[k]);
+							if (isLeft(P[i],P[j],P[k]))
+							{
+								kandidat = false;
+							}
 						}
+						k++;
 					}
 				}
+				j++;
 			}
+			if(kandidat)
+				System.out.printf("\n(%f,%f) gehört zur ConvexHülle",P[k-1].get(0),P[k-1].get(1));
+				//Hier zur Liste hinzufügen
 		}
 		return huelle;
 	}
@@ -54,6 +69,11 @@ public class ConvexHull {
 
 		ac[0] = c.get(0) - a.get(0);
 		ac[1] = c.get(1) - a.get(1);
+
+		if ((ab[0] * ac[1] - ac[0] * ab[1]) > 0) //Wenn Kreuzprodukt > 0 dann liegt links
+			return true;
+
+		return false;
 	}
 
 	private static boolean isInTriangle(double x, double y, double... t) {
