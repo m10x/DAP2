@@ -1,0 +1,31 @@
+c) O(n)
+
+d)
+
+1.000
+dyna	0ms
+naiv	3ms
+
+
+5.000
+dyna	1ms
+naiv	12ms
+
+
+10.000
+dyna	1ms
+naiv	37ms
+
+
+50.000
+dyna	3ms
+naiv	1.005ms
+
+
+100.000
+dyna	5ms
+naiv	4.050ms
+
+
+100.000.000
+dyna	143ms
